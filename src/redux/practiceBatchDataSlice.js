@@ -27,6 +27,19 @@ export const purchasePracticeBatchSlice = createAsyncThunk(
   },
 );
 
+// Practice Batch Payment Varify
+export const paymentPracticeBatchVarifySlice = createAsyncThunk(
+  'user/paymentPracticeBatchVarifySlice',
+  async (paymentData, { rejectWithValue }) => {
+    try {
+      const response = await PracticeBatch.paymentPracticeBatchVerify(paymentData);
+      return response;
+    } catch (error) {
+      return rejectWithValue(error);
+    }
+  },
+);
+
 // ✅ Async Thunks get Batch videos Data
 export const getBatchVideosSlice = createAsyncThunk(
   "getBatchVideosData",
@@ -153,10 +166,10 @@ const practiceBatchSlice = createSlice({
   },
 });
 
-export const { 
-  clearError, 
-  clearMessage, 
-  resetState, 
+export const {
+  clearError,
+  clearMessage,
+  resetState,
   clearPurchaseState,
   clearBatchVideos // ✅ ADDED: Export new action
 } = practiceBatchSlice.actions;

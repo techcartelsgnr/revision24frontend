@@ -49,7 +49,7 @@ export const getSingleCategoryPackageTestseriesDetailSlice = createAsyncThunk(
     async (id, { rejectWithValue }) => {
         try {
             const data = await HomeProvider.getSingleCategoryPackageTestseriesDetails(id);
-            console.log('Test Series Details', data);
+            // console.log('Test Series Details', data);
             return data;
         } catch (error) {
             return rejectWithValue(error.response?.data || error.message);
@@ -68,7 +68,7 @@ export const getSingleCategoryPackageTestseriesQuestionSlice = createAsyncThunk(
         // console.log("this is id", id)
         try {
             const data = await HomeProvider.getSingleCategoryPackageTestseriesQuestion(id);
-            console.log('Exam Question', data);
+            // console.log('Exam Question', data);
             return data;
         } catch (error) {
             return rejectWithValue(error.response?.data || error.message);
@@ -82,6 +82,7 @@ export const attendQuestionSubmitSlice = createAsyncThunk(
     async (attendQuestion, { rejectWithValue }) => {
         try {
             const data = await HomeProvider.submitAttendQuestions(attendQuestion);
+            // console.log('Attend question slice data', data)
             return data;
         } catch (error) {
             return rejectWithValue(error.response?.data || error.message);
@@ -178,6 +179,18 @@ export const checkoutpaySlice = createAsyncThunk(
         try {
             const response = await HomeProvider.checkoutpay(subscibeData);
 
+            return response;
+        } catch (error) {
+            return rejectWithValue(error);
+        }
+    },
+);
+// Subscription Payment Varify
+export const paymentVarifySlice = createAsyncThunk(
+    'user/paymentVarifySlice',
+    async (paymentData, { rejectWithValue }) => {
+        try {
+            const response = await HomeProvider.paymentVerify(paymentData);
             return response;
         } catch (error) {
             return rejectWithValue(error);

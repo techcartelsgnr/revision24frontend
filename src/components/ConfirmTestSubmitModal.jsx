@@ -1,13 +1,14 @@
 import React from 'react';
 
-const ConfirmTestSubmitModal = ({ show, onClose, onConfirm }) => {
+const ConfirmTestSubmitModal = ({ show, onClose, onConfirm, message }) => {
   if (!show) return null;
-
+  const finalMessage =
+    message || 'Are you sure you want to Submit your test?';
   return (
     <div className="fixed inset-0 bg-[rgba(0,0,0,0.5)] bg-opacity-50 flex items-center justify-center z-50">
       <div className="bg-white p-6 rounded-xl shadow-md max-w-sm w-full">
         <h2 className="text-lg font-semibold mb-4 text-center">
-          Are you sure you want to Submit your test?
+          {finalMessage}
         </h2>
         <div className="flex justify-center space-x-4">
           <button

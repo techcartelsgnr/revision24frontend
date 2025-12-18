@@ -278,7 +278,7 @@
 //             <IoMdHome size={20} className="text-sky-600" />
 //             <span>Home</span>
 //           </Link>
-          
+
 //           {auth && (
 //             <>
 //               <Link 
@@ -499,7 +499,7 @@
 //                 <IoMdHome size={22} className="text-sky-600" />
 //                 <span>Home</span>
 //               </Link>
-              
+
 //               {auth && (
 //                 <>
 //                   <Link 
@@ -615,8 +615,8 @@ const Header = () => {
       <div className="flex justify-between items-center">
         <div className="flex items-center gap-4">
           {/* ✅ Just menu button, no sidebar here */}
-          <button 
-            onClick={toggleSidebar} 
+          <button
+            onClick={toggleSidebar}
             className="md:hidden text-gray-700 cursor-pointer hover:bg-gray-100 p-2 rounded-lg transition-colors"
           >
             {isSideBar ? <X size={24} /> : <Menu size={24} />}
@@ -643,13 +643,14 @@ const Header = () => {
           </Link>
 
           {auth ? (
-            <button
-              onClick={handleLogout}
-              disabled={logoutLoading}
-              className="bg-red-500 hover:bg-red-600 text-white px-2 sm:px-3 md:px-4 py-1.5 sm:py-2 rounded-md text-xs sm:text-sm font-semibold disabled:opacity-50"
-            >
-              {logoutLoading ? 'Please wait...' : 'Log out'}
-            </button>
+            // <button
+            //   onClick={handleLogout}
+            //   disabled={logoutLoading}
+            //   className="bg-red-500 hover:bg-red-600 text-white px-2 sm:px-3 md:px-4 py-1.5 sm:py-2 rounded-md text-xs sm:text-sm font-semibold disabled:opacity-50"
+            // >
+            //   {logoutLoading ? 'Please wait...' : 'Log out'}
+            // </button>
+            ''
           ) : (
             <>
               <button onClick={() => nav('/login')} className="bg-blue-500 hover:bg-blue-600 text-white px-2 sm:px-3 md:px-4 py-1.5 sm:py-2 rounded-md text-xs sm:text-sm font-semibold">

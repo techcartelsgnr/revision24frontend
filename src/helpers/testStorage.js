@@ -212,6 +212,35 @@ export const clearAllEncryptedTestData = async () => {
         console.error("❌ Failed to clear all encrypted data:", error);
     }
 };
+// Clear ONLY data related to a specific testId
+export const clearTestEncryptedData = async (testId) => {
+  try {
+    if (!testId) return;
+
+    // These are the keys you are using with secureSaveTestData(testId, key, value)
+    const perTestKeys = [
+      "selectedOptions",
+      "optionSelected",
+      "markedForReview",
+      "skippedQuestions",
+      "markedwithans",
+      "currentQuestion",
+      "currentSection",
+      "sectionCompleted",
+      "sectionCompletedFlag",
+      // add other test-specific keys if you have them
+    ];
+
+    // Assuming your keys in IndexedDB are of form `${testId}-${key}`
+    for (const key of perTestKeys) {
+      const fullKey = `${testId}-${key}`;
+      await idbDelete(fullKey);
+    }
+  } catch (error) {
+    console.error("❌ Failed to clear test data:", error);
+  }
+};
+
 
 export const checkAllEncryptedTestData = async () => {
     try {

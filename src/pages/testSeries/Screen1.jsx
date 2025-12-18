@@ -6,7 +6,7 @@ const Screen1 = () => {
   const { state } = useLocation();
   const [userInfo, setUserInfo] = useState({});
   const nav = useNavigate();
-  console.log('Screen 1 state all data Response', state)
+  // console.log('Screen 1 state all data Response', state)
   const getUserInfo = async () => {
     const user = await getUserDataDecrypted();
     setUserInfo(user);
@@ -79,6 +79,10 @@ const Screen1 = () => {
                     testId: state?.testId,
                     testDetail: state?.testDetail,
                     packageDetail: state?.packageDetail,
+                    isReattempt: state?.isReattempt || false,
+                    createNewAttempt: state?.createNewAttempt || false,
+                    total_marks: state?.total_marks,
+                    total_questions: state?.total_questions,
                   },
                 })
               }

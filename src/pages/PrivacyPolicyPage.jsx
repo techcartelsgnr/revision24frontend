@@ -58,7 +58,7 @@ const PrivacyPolicy = () => {
   return (
     <>
       <Header />
-      <div className="max-w-4xl mx-auto px-4 p-8 text-gray-800 bg-white shadow-md rounded-lg">
+      <div className="max-w-8xl mx-auto px-4 p-8 text-gray-800 bg-white shadow-md rounded-lg">
         <h1 className="text-3xl font-bold text-center mb-6">Privacy Policy – Revision24</h1>
         <p className="text-sm text-gray-500 text-center mb-6">Effective Date: July 1, 2025</p>
 

@@ -58,7 +58,7 @@ const InstructionIcon = ({ type, hasCheckMark }) => {
 const RRBInstructionPage = () => {
     const nav = useNavigate();
     const { state } = useLocation();
-    console.log("STATE RRB INSTRUCTION SCREEN ===>", state);
+    console.log("STATE RRB INSTRUCTION SCREEN 1===>", state);
 
     // Extract test information from state
     const testInfo = state?.testInfo || {};

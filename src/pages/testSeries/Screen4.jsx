@@ -6,7 +6,7 @@ import { secureSet } from '../../helpers/storeValues';
 const Screen4 = () => {
     const nav = useNavigate();
     const { state } = useLocation();
-    console.log("Screen No. 4 state", state);
+    // console.log("Screen No. 4 state", state);
     const [isChecked, setIsChecked] = useState(false);
     const [lang, setLang] = useState('Choose a language')
     

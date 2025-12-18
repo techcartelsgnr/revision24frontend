@@ -72,6 +72,7 @@ const Sidebar = () => {
         { name: 'Current Affairs', icon: <Newspaper size={18} />, path: '/current-affairs', badge: 'FREE' },
         { name: 'Monthly Magazines', icon: <BookOpenCheck size={18} />, path: '/all-magazies', badge: '' },
         { name: 'Notes & PDFs', icon: <NotebookPen size={18} />, path: '/pdf-notes', badge: '' },
+        { name: 'Study Material', icon: <NotebookPen size={18} />, path: '/study-material', badge: '' },
         { name: 'Practice Batch', icon: <SquarePlay size={18} />, path: '/all-batches', badge: '' },
       ],
     },
@@ -103,7 +104,7 @@ const Sidebar = () => {
         { name: 'My Transactions', icon: <BadgeIndianRupee size={18} />, path: '/my-transaction' },
         { name: 'My Collection', icon: <LucideSave size={18} />, path: '/saved-items' },
         { name: 'Support', icon: <HelpCircleIcon size={18} />, path: '/help-support' },
-        { name: 'Refund Policy', icon: <WalletCards size={18} />, path: '/refund-policy' },
+        // { name: 'Refund Policy', icon: <WalletCards size={18} />, path: '/refund-policy' },
         { name: 'Settings', icon: <Settings size={18} />, path: '/setting' },
       ],
     },
@@ -323,7 +324,7 @@ const Sidebar = () => {
 
         {/* Footer - Logout Section */}
         <div className="p-4 border-t border-gray-200 bg-gray-50">
-          <button
+          {/* <button
             onClick={handleLogout}
             disabled={logoutLoading}
             className={clsx(
@@ -344,7 +345,7 @@ const Sidebar = () => {
                 <span>Logout</span>
               </>
             )}
-          </button>
+          </button> */}
 
           {/* Status Bar */}
           <div className="mt-3 flex items-center justify-center gap-2 text-xs text-gray-500">

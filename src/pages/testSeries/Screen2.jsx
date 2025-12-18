@@ -10,7 +10,7 @@ const Screen2 = () => {
     const { state } = useLocation();
     const [showAlert, setShowAlert] = useState(false);
     const [message, setMessage] = useState('');
-
+// console.log('screen 2', state)
     const [showSuccess, setShowSuccess] = useState(false);
     const [userInfo, setUserInfo] = useState(state?.userInfo || {});
     const [systemNumber, setSystemNumber] = useState(`R24${state?.userInfo?.mobile?.slice(0, 5)}`);
@@ -59,6 +59,10 @@ const Screen2 = () => {
                 testId: state?.testId,
                 testDetail: state?.testDetail,
                 packageDetail: state?.packageDetail,
+                isReattempt: state?.isReattempt || false,
+                createNewAttempt: state?.createNewAttempt || false,
+                total_marks: state?.total_marks,
+                total_questions: state?.total_questions,
             }
         });
         // setShowSuccess(true);
@@ -149,6 +153,8 @@ const Screen2 = () => {
                             testId: state?.testId,
                             testDetail: state?.testDetail,
                             packageDetail: state,
+                            isReattempt: state?.isReattempt || false,
+                            createNewAttempt: state?.createNewAttempt || false,
                         }
                     });
                 }}

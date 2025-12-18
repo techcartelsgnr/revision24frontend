@@ -61,31 +61,62 @@ const HomeProvider = {
 
 
 
+    // getSingleCategoryPackageTestseriesQuestion: async (id) => {
+    //     try {
+    //         // // ✅ Change 'token' to 'user_token'
+    //         // const token = localStorage.getItem('user_token');
+    //         // console.log('token', token);
+
+    //         // if (!token) {
+    //         //     throw new Error('Authentication token not found. Please login again.');
+    //         // }
+
+    //         // const res = await api.get(`/question-list-get?test_series_id=${id}`, {
+    //         //     headers: { Authorization: `Bearer ${token}` },
+    //         // });
+    //         const token = await getUserToken();
+    //         // console.log('Token from getUserToken:', token);
+
+    //         const res = await api.get(`/question-list-get?test_series_id=${id}`);
+
+    //         console.log('GET SINGLE CATEGORY PACKAGE TESTSERIES QUESTION', res?.data);
+    //         return res.data;
+    //     } catch (error) {
+    //         console.error('Error fetching testseries questions:', error);
+    //         throw error;
+    //     }
+    // },
+
     getSingleCategoryPackageTestseriesQuestion: async (id) => {
-        try {
-            // // ✅ Change 'token' to 'user_token'
-            // const token = localStorage.getItem('user_token');
-            // console.log('token', token);
-
-            // if (!token) {
-            //     throw new Error('Authentication token not found. Please login again.');
-            // }
-
-            // const res = await api.get(`/question-list-get?test_series_id=${id}`, {
-            //     headers: { Authorization: `Bearer ${token}` },
-            // });
-            const token = await getUserToken();
-            // console.log('Token from getUserToken:', token);
-
-            const res = await api.get(`/question-list-get?test_series_id=${id}`);
-
-            console.log('GET SINGLE CATEGORY PACKAGE TESTSERIES QUESTION', res?.data);
-            return res.data;
-        } catch (error) {
-            console.error('Error fetching testseries questions:', error);
-            throw error;
+    try {
+        const token = await getUserToken();
+        
+        // ✅ FIX: Extract numeric ID
+        console.log('🔍 HomeProvider - Received id:', id, typeof id);
+        
+        // ✅ Handle both object and direct ID
+        let testSeriesId;
+        if (typeof id === 'object' && id !== null) {
+            testSeriesId = id.test_series_id || id.id || id;
+        } else {
+            testSeriesId = id;
         }
-    },
+        
+        // ✅ Convert to number
+        const numericId = parseInt(testSeriesId) || testSeriesId;
+        
+        console.log('🔍 HomeProvider - Sending test_series_id:', numericId, typeof numericId);
+
+        const res = await api.get(`/question-list-get?test_series_id=${numericId}`);
+
+        console.log('✅ GET SINGLE CATEGORY PACKAGE TESTSERIES QUESTION', res?.data);
+        return res.data;
+    } catch (error) {
+        console.error('❌ Error fetching testseries questions:', error);
+        throw error;
+    }
+},
+
 
     submitAttendQuestions: async (attendQuestion) => {
         try {
@@ -150,71 +181,71 @@ const HomeProvider = {
     //         throw error;
     //     }
     // },
-//     getUserTestSeriesRank: async ({ test_id, attend_id }) => {
-//     try {
-//         const token = localStorage.getItem('token');
+    //     getUserTestSeriesRank: async ({ test_id, attend_id }) => {
+    //     try {
+    //         const token = localStorage.getItem('token');
 
-//         // ✅ Debug: Log what's being sent
-//         console.log('🔍 API Request:', {
-//             url: `/user-attend-test-series-rank-get?test_id=${test_id}`,
-//             body: { attend_id },
-//             attend_id_value: attend_id,
-//             attend_id_type: typeof attend_id
-//         });
+    //         // ✅ Debug: Log what's being sent
+    //         console.log('🔍 API Request:', {
+    //             url: `/user-attend-test-series-rank-get?test_id=${test_id}`,
+    //             body: { attend_id },
+    //             attend_id_value: attend_id,
+    //             attend_id_type: typeof attend_id
+    //         });
 
-//         const res = await api.post(
-//             `/user-attend-test-series-rank-get?test_id=${test_id}`,
-//             { attend_id },
-//             {
-//                 headers: { Authorization: `Bearer ${token}` }
-//             }
-//         );
+    //         const res = await api.post(
+    //             `/user-attend-test-series-rank-get?test_id=${test_id}`,
+    //             { attend_id },
+    //             {
+    //                 headers: { Authorization: `Bearer ${token}` }
+    //             }
+    //         );
 
-//         // ✅ Debug: Log the response
-//         console.log('🔍 API Response:', res.data);
+    //         // ✅ Debug: Log the response
+    //         console.log('🔍 API Response:', res.data);
 
-//         return res.data;
-//     } catch (error) {
-//         console.error('Error TEST SERIES RANK:', error);
-//         throw error;
-//     }
-// },
+    //         return res.data;
+    //     } catch (error) {
+    //         console.error('Error TEST SERIES RANK:', error);
+    //         throw error;
+    //     }
+    // },
 
-getUserTestSeriesRank: async ({ test_id, attend_id }) => {
-    try {
-        const token = localStorage.getItem('token');
+    getUserTestSeriesRank: async ({ test_id, attend_id }) => {
+        try {
+            const token = localStorage.getItem('token');
 
-        console.log('🔍 API Request Being Made:', {
-            url: `/user-attend-test-series-rank-get?test_id=${test_id}`,
-            body: { attend_id },
-            attend_id_value: attend_id,
-            attend_id_type: typeof attend_id
-        });
+            console.log('🔍 API Request Being Made:', {
+                url: `/user-attend-test-series-rank-get?test_id=${test_id}`,
+                body: { attend_id },
+                attend_id_value: attend_id,
+                attend_id_type: typeof attend_id
+            });
 
-        const res = await api.post(
-            `/user-attend-test-series-rank-get?test_id=${test_id}`,
-            { attend_id },
-            {
-                headers: { 
-                    Authorization: `Bearer ${token}`,
-                    'Cache-Control': 'no-cache',  // ✅ Prevent caching
-                    'Pragma': 'no-cache'
+            const res = await api.post(
+                `/user-attend-test-series-rank-get?test_id=${test_id}`,
+                { attend_id },
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                        'Cache-Control': 'no-cache',  // ✅ Prevent caching
+                        'Pragma': 'no-cache'
+                    }
                 }
-            }
-        );
+            );
 
-        console.log('🔍 API Response Received:', {
-            status: res.status,
-            attend_id_sent: attend_id,
-            my_detail_id: res.data?.data?.my_detail?.id
-        });
+            console.log('🔍 API Response Received:', {
+                status: res.status,
+                attend_id_sent: attend_id,
+                my_detail_id: res.data?.data?.my_detail?.id
+            });
 
-        return res.data;
-    } catch (error) {
-        console.error('❌ API Error:', error);
-        throw error;
-    }
-},
+            return res.data;
+        } catch (error) {
+            console.error('❌ API Error:', error);
+            throw error;
+        }
+    },
 
 
 
@@ -254,12 +285,13 @@ getUserTestSeriesRank: async ({ test_id, attend_id }) => {
             throw error.response?.data || error.message;
         }
     },
+
     checkoutpay: async (planData) => {
         try {
             const token = localStorage.getItem('token');
             // if (!token) throw new Error('No token found');
 
-            const response = await api.post(`/checkout.pay`, planData, {
+            const response = await api.post(`/checkout.pay2`, planData, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                     'Content-Type': 'multipart/form-data',
@@ -270,6 +302,29 @@ getUserTestSeriesRank: async ({ test_id, attend_id }) => {
             throw error.response?.data || error.message;
         }
     },
+    paymentVerify: async (paymentData) => {
+        try {
+            const token = localStorage.getItem('token');
+
+            const response = await api.get(`/payment-success2`, {
+                params: {
+                    order_id: paymentData.razorpay_order_id,  // ✅ Rename to order_id
+                    razorpay_payment_id: paymentData.razorpay_payment_id,
+                    razorpay_signature: paymentData.razorpay_signature,
+                    platform: 'web'
+                },
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || error.message;
+        }
+    },
+
+
+
 
     userProfileGet: async () => {
         try {

@@ -86,6 +86,7 @@ import BatchVideos from './pages/practiceBatch/BatchVideos';
 import PurchasedBatch from './pages/practiceBatch/PurchasedBatch';
 import SubscriptionPaymentSummery from './pages/SubscriptionPaymentSummery';
 import PracticeBatchPaymentSummery from './pages/practiceBatch/PracticeBatchPaymentSummery';
+import StudyMaterial from './pages/studyMaterial/StudyMaterial';
 
 function App() {
   // useEffect(() => {
@@ -149,6 +150,7 @@ function App() {
         {/* <Route path="/test-series" element={<TestSeriesPage />} /> */}
         <Route path="/terms-of-service" element={<TermsOfServicePage />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+        <Route path="/refund-policy" element={<RefundPolicy />} />
         <Route path="/blog" element={<BlogPage />} />
         <Route path="/blog/:id" element={<BlogDetailPage />} />
         <Route path="/cashfree-payment" element={<CashfreeCheckoutPage />} />
@@ -167,7 +169,6 @@ function App() {
           <Route path="/forgot-password" element={<ForgotPasswordPage />} />
           <Route path="/forgot-password-verify-otp" element={<ForgotPasswordOtpPage />} />
           <Route path="/reset-password" element={<SetNewPasswordPage />} />
-
 
         </Route>
 
@@ -203,7 +204,7 @@ function App() {
         <Route path="/my-transaction" element={<SideBarLayout><MyTransactionPage /></SideBarLayout>} />
         <Route path="/saved-items" element={<SideBarLayout><MySavedCollectionPage /></SideBarLayout>} />
         <Route path="/help-support" element={<SideBarLayout><HelpAndSupportPage /></SideBarLayout>} />
-        <Route path="/refund-policy" element={<SideBarLayout><RefundPolicy /></SideBarLayout>} />
+
         <Route path="/live-classes" element={<SideBarLayout><LiveClassesPage /></SideBarLayout>} />
         <Route path="/test-series" element={<SideBarLayout><TestSeriesPage /></SideBarLayout>} />
         <Route path="/setting" element={<SideBarLayout><SettingPage /></SideBarLayout>} />
@@ -233,7 +234,10 @@ function App() {
         <Route path="/current-affairs-details" element={<SideBarLayout><CurrentAffairesdetailsPage /></SideBarLayout>} />
         <Route path="/pdf-notes" element={<SideBarLayout><NotesPdfPage /></SideBarLayout>} />
         <Route path="/pdf-viewer" element={<SideBarLayout><PdfViewerEditor /></SideBarLayout>} />
-
+         
+        {/* Study Material */}
+        <Route path="/study-material" element={<SideBarLayout><StudyMaterial /></SideBarLayout>} />
+        
         {/* Topic test */}
         <Route path="/practice" element={<SideBarLayout><TopicsWiseTestPage /></SideBarLayout>} />
         <Route path="/practice-test-instruction" element={<SideBarLayout><TopicTestInstructions /></SideBarLayout>} />
@@ -251,12 +255,12 @@ function App() {
         <Route path="/gk-ca-test-instruction" element={<SideBarLayout><GkCaTestInstructions /></SideBarLayout>} />
         <Route path="/gk-test-attend" element={<ProtectedRoute><GkCAtestPage /></ProtectedRoute>} />
 
-          {/* Doubts */}
+        {/* Doubts */}
         <Route path="/doubts" element={<SideBarLayout><Doubts /></SideBarLayout>} />
 
         {/* Maganizes routes */}
         <Route path="/all-magazies" element={<SideBarLayout><Allmaganizes /></SideBarLayout>} />
-        
+
         {/* Practice Batch routes */}
         <Route path="/all-batches" element={<SideBarLayout><PracticeBatch /></SideBarLayout>} />
         <Route path="/practice-batch-payment-summery" element={<SideBarLayout><PracticeBatchPaymentSummery /></SideBarLayout>} />

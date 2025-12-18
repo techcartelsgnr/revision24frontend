@@ -19,45 +19,45 @@ const Footer = () => {
   const currentYear = new Date().getFullYear();
 
   const socialLinks = [
-    { 
-      icon: FaFacebookF, 
-      url: "https://www.facebook.com/revision24official", 
+    {
+      icon: FaFacebookF,
+      url: "https://www.facebook.com/revision24official",
       label: "Facebook",
-      color: "hover:text-blue-500" 
+      color: "hover:text-blue-500"
     },
-    { 
-      icon: FaTwitter, 
-      url: "https://x.com/theRevision24", 
+    {
+      icon: FaTwitter,
+      url: "https://x.com/theRevision24",
       label: "Twitter",
-      color: "hover:text-blue-400" 
+      color: "hover:text-blue-400"
     },
-    { 
-      icon: FaInstagram, 
-      url: "https://instagram.com/revision24official", 
+    {
+      icon: FaInstagram,
+      url: "https://instagram.com/revision24official",
       label: "Instagram",
-      color: "hover:text-pink-500" 
+      color: "hover:text-pink-500"
     },
-    { 
-      icon: FaYoutube, 
-      url: "https://youtube.com/@revision24official", 
+    {
+      icon: FaYoutube,
+      url: "https://youtube.com/@revision24official",
       label: "YouTube",
-      color: "hover:text-red-500" 
+      color: "hover:text-red-500"
     },
-    { 
-      icon: FaTelegram, 
-      url: "https://t.me/revision24official", 
+    {
+      icon: FaTelegram,
+      url: "https://t.me/revision24official",
       label: "Telegram",
-      color: "hover:text-blue-400" 
+      color: "hover:text-blue-400"
     },
   ];
 
   const companyLinks = [
     { name: "About Us", url: "/about" },
-    { 
-      name: "Careers", 
-      url: "https://forms.gle/u3JHMnuZ7NHHUaBs7", 
+    {
+      name: "Careers",
+      url: "https://forms.gle/u3JHMnuZ7NHHUaBs7",
       external: true,
-      badge: "We are hiring" 
+      badge: "We are hiring"
     },
     { name: "Media", url: "#" },
     { name: "Contact", url: "/contact" },
@@ -77,21 +77,21 @@ const Footer = () => {
       {/* Main Footer Content */}
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
-          
+
           {/* Company Info */}
           <div className="space-y-6">
             <div className="flex items-center space-x-3">
-              <img 
-                src="/logo.jpeg" 
-                alt="Revision24 Logo" 
-                className="w-12 h-12 sm:w-16 sm:h-16 rounded-xl shadow-lg ring-2 ring-blue-500/20" 
+              <img
+                src="/logo.jpeg"
+                alt="Revision24 Logo"
+                className="w-12 h-12 sm:w-16 sm:h-16 rounded-xl shadow-lg ring-2 ring-blue-500/20"
               />
               <div>
                 <h3 className="text-xl font-bold text-white">Revision24</h3>
                 <p className="text-sm text-gray-400">Learn • Practice • Excel</p>
               </div>
             </div>
-            
+
             <div className="space-y-3">
               <h4 className="text-white font-semibold text-lg">Duharia Enterprises Pvt. Ltd.</h4>
               <div className="space-y-2 text-sm">
@@ -131,9 +131,9 @@ const Footer = () => {
               {companyLinks.map((link, index) => (
                 <li key={index}>
                   {link.external ? (
-                    <a 
-                      href={link.url} 
-                      target="_blank" 
+                    <a
+                      href={link.url}
+                      target="_blank"
                       rel="noopener noreferrer"
                       className="group flex items-center text-sm hover:text-white transition-colors duration-300"
                     >
@@ -146,8 +146,8 @@ const Footer = () => {
                       )}
                     </a>
                   ) : (
-                    <a 
-                      href={link.url} 
+                    <a
+                      href={link.url}
                       className="group flex items-center text-sm hover:text-white transition-colors duration-300"
                     >
                       <span className="w-0 group-hover:w-2 h-0.5 bg-blue-500 transition-all duration-300 mr-0 group-hover:mr-2 rounded-full"></span>
@@ -168,13 +168,13 @@ const Footer = () => {
             <ul className="space-y-3">
               {productLinks.map((link, index) => {
                 const LinkComponent = link.component || 'a';
-                const linkProps = link.external 
+                const linkProps = link.external
                   ? { href: link.url, target: "_blank", rel: "noopener noreferrer" }
                   : { [link.component ? 'to' : 'href']: link.url };
-                
+
                 return (
                   <li key={index}>
-                    <LinkComponent 
+                    <LinkComponent
                       {...linkProps}
                       className="group flex items-center text-sm hover:text-white transition-colors duration-300"
                     >
@@ -195,8 +195,8 @@ const Footer = () => {
                 Get Our App
               </h3>
               <div className="flex flex-wrap gap-3">
-                <a 
-                  href="https://play.google.com/store/apps/details?id=com.edurevision24&pcampaignid=web_share" 
+                <a
+                  href="https://play.google.com/store/apps/details?id=com.edurevision24&pcampaignid=web_share"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="group"
@@ -209,8 +209,8 @@ const Footer = () => {
                     </div>
                   </div>
                 </a>
-                <a 
-                  href="https://apps.apple.com/in/app/edurevision24/id6751642229" 
+                <a
+                  href="https://apps.apple.com/in/app/edurevision24/id6751642229"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="group"
@@ -281,20 +281,27 @@ const Footer = () => {
               <FaHeart className="w-3 h-3 mx-2 text-red-500 animate-pulse" />
               <span>Made in India</span>
             </div>
-            
+
             <div className="flex items-center space-x-6 text-sm">
-              <Link 
-                to="/terms-of-service" 
+              <Link
+                to="/terms-of-service"
                 className="text-gray-400 hover:text-white transition-colors duration-300 relative group"
               >
                 Terms
                 <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-blue-500 transition-all duration-300 group-hover:w-full"></span>
               </Link>
-              <Link 
-                to="/privacy-policy" 
+              <Link
+                to="/privacy-policy"
                 className="text-gray-400 hover:text-white transition-colors duration-300 relative group"
               >
                 Privacy
+                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-blue-500 transition-all duration-300 group-hover:w-full"></span>
+              </Link>
+              <Link
+                to="/refund-policy"
+                className="text-gray-400 hover:text-white transition-colors duration-300 relative group"
+              >
+                Refund Policy
                 <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-blue-500 transition-all duration-300 group-hover:w-full"></span>
               </Link>
               <div className="flex items-center text-gray-500">

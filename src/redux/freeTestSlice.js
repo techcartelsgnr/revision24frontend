@@ -161,6 +161,19 @@ export const getMindMapSlice = createAsyncThunk(
   },
 );
 
+// Async Thunks getStudyNotesSlice
+export const getStudyNotesSlice = createAsyncThunk(
+  'user/getStudyNotesSlice',
+  async ({ page = 1 }, { rejectWithValue }) => {
+    try {
+      const response = await freeTestProvider.getStudyNotes(page);
+      return response;
+    } catch (error) {
+      return rejectWithValue(error);
+    }
+  },
+);
+
 
 
 

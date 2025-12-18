@@ -4,7 +4,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 const Screen3 = () => {
     const nav = useNavigate();
     const { state } = useLocation();
-    console.log("screen3 state===>", state);
+    // console.log("screen3 state===>", state);
 
     const subjects = state?.testDetail || [];
     const totalQuestions = subjects.reduce((sum, s) => sum + parseInt(s.no_of_question || 0), 0);
