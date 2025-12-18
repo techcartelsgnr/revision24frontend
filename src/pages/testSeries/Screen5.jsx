@@ -12662,13 +12662,13 @@ const Screen5 = () => {
                     {/* Left - Links */}
                     <div className="flex gap-12">
                         <button
-                            onMouseEnter={() => setIsModalOpen(true)}
+                            onClick={() => setIsModalOpen(true)}
                             className="text-orange-600 font-bold text-base hover:underline uppercase"
                         >
                             SYMBOLS
                         </button>
                         <button
-                            onMouseEnter={() => setOpenModal(true)}
+                            onClick={() => setOpenModal(true)}
                             className="text-orange-600 font-bold text-base hover:underline uppercase"
                         >
                             INSTRUCTIONS
