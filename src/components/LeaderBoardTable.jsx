@@ -166,9 +166,9 @@ const LeaderBoardTable = ({ data, rankScore }) => {
                                     </span>
                                 )}
                             </div>
-                            {row.user_mobile && (
+                            {/* {row.user_mobile && (
                                 <span className="text-xs text-gray-500">{row.user_mobile}</span>
-                            )}
+                            )} */}
                         </div>
                     </div>
                 );

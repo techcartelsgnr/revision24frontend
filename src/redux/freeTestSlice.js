@@ -174,6 +174,54 @@ export const getStudyNotesSlice = createAsyncThunk(
   },
 );
 
+export const getStudyNoteDetailsSlice = createAsyncThunk(
+  'user/getStudyNoteDetailsSlice',
+  async (id, { rejectWithValue }) => {
+    try {
+      const response = await freeTestProvider.getStudyNoteDetails(id);
+      return response;
+    } catch (error) {
+      return rejectWithValue(error);
+    }
+  },
+);
+
+export const purchaseStudyMaterialSlice = createAsyncThunk(
+  'user/purchaseStudyMaterialSlice',
+  async (purchaseData, { rejectWithValue }) => {
+    try {
+      const response = await freeTestProvider.purchaseStudyMaterial(purchaseData);
+      return response;
+    } catch (error) {
+      return rejectWithValue(error);
+    }
+  },
+);
+
+export const paymentVerifyStudyNoteSlice = createAsyncThunk(
+  'user/paymentVerifyStudyNoteSlice',
+  async (payload, { rejectWithValue }) => {
+    try {
+      const response = await freeTestProvider.paymentVerifyStudyMaterial(payload);
+      return response;
+    } catch (error) {
+      return rejectWithValue(error);
+    }
+  },
+);
+
+export const paymentCancelStudyNoteSlice = createAsyncThunk(
+  'user/paymentCancelStudyNoteSlice',
+  async (payload, { rejectWithValue }) => {
+    try {
+      const response = await freeTestProvider.paymentCancelStudyMaterial(payload);
+      return response;
+    } catch (error) {
+      return rejectWithValue(error);
+    }
+  },
+);
+
 
 
 

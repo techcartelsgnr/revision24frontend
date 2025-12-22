@@ -212,18 +212,30 @@ const TestPackageCollection = () => {
     const [btnLoadingId, setBtnLoadingId] = useState(null);
     const [showDeleteAlert, setShowDeleteAlert] = useState(false)
     const [markedData, setMarkedData] = useState(null)
+    const [showEmptyModal, setShowEmptyModal] = useState(false)
 
     const fetchBookMarkTestSeries = async () => {
         try {
             setLoading(true)
             const res = await dispatch(getUserCollectionDetailSlice()).unwrap();
             if (res.status_code == 200) {
-                setPackageData(res.data.package_id.data || []);
-                const ids = (res.data.package_id?.data || []).map(item => item.id);
+                const data = res.data?.package_id?.data || [];
+                setPackageData(data);
+                const ids = data.map(item => item.id);
                 setBookmarkedIds(ids);
+
+                if (data.length === 0) {
+                    setShowEmptyModal(true);
+                } else {
+                    setShowEmptyModal(false);
+                }
+            } else {
+                // If not 200, but we want to show the modal if it's actually empty
+                setShowEmptyModal(true);
             }
         } catch (error) {
             console.error("Fetch error", error);
+            setShowEmptyModal(true); // Show modal on error as a fallback for empty state
         } finally {
             setLoading(false)
             setShowDeleteAlert(false)
@@ -276,7 +288,7 @@ const TestPackageCollection = () => {
                     .map(([categoryId, items], catIndex) => (
                         <div key={categoryId} className="mb-12 px-4 sm:px-6 lg:px-8">
                             {/* Category Title */}
-                            <motion.h2 
+                            <motion.h2
                                 initial={{ opacity: 0, x: -20 }}
                                 animate={{ opacity: 1, x: 0 }}
                                 className="text-2xl font-bold text-gray-900 mb-6"
@@ -332,11 +344,10 @@ const TestPackageCollection = () => {
                                                             setMarkedData(item)
                                                             setShowDeleteAlert(true)
                                                         }}
-                                                        className={`p-2 rounded-lg transition-all ${
-                                                            bookmarkedIds.includes(item.id)
+                                                        className={`p-2 rounded-lg transition-all ${bookmarkedIds.includes(item.id)
                                                                 ? 'bg-yellow-500 text-white shadow-lg'
                                                                 : 'bg-white/80 text-gray-600 hover:bg-yellow-500 hover:text-white'
-                                                        }`}
+                                                            }`}
                                                     >
                                                         {btnLoadingId === item.id ? (
                                                             <Loader2 size={18} className="animate-spin" />
@@ -409,8 +420,61 @@ const TestPackageCollection = () => {
                         </div>
                     ))
             ) : (
-                <div className="w-full h-screen flex items-center justify-center">
-                    <NotFoundData message="Add Test Series & Start Practicing" />
+                // Only show this when loading is false and packageData is actually empty
+                !loading && (
+                    <div className="w-full h-[60vh] flex flex-col items-center justify-center text-center p-8">
+                        {/* This is a fallback in case the modal doesn't show for some reason, though it should */}
+                        <motion.div
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            className="bg-gray-100/50 backdrop-blur-sm p-8 rounded-3xl border border-gray-200"
+                        >
+                            <Bookmark size={48} className="text-gray-400 mx-auto mb-4" />
+                            <p className="text-gray-500 text-xl font-medium">No saved packages found</p>
+                        </motion.div>
+                    </div>
+                )
+            )}
+
+            {/* Empty State Modal */}
+            {showEmptyModal && (
+                <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
+                    <motion.div
+                        initial={{ opacity: 0, scale: 0.9, y: 20 }}
+                        animate={{ opacity: 1, scale: 1, y: 0 }}
+                        className="bg-white rounded-3xl shadow-2xl max-w-md w-full overflow-hidden"
+                    >
+                        <div className="bg-gradient-to-br from-blue-600 to-indigo-700 p-8 text-center relative">
+                            <div className="absolute top-0 left-0 w-full h-full opacity-10 pointer-events-none">
+                                <svg viewBox="0 0 100 100" className="w-full h-full">
+                                    <circle cx="10" cy="10" r="2" fill="white" />
+                                    <circle cx="90" cy="90" r="2" fill="white" />
+                                    <circle cx="90" cy="10" r="2" fill="white" />
+                                    <circle cx="10" cy="90" r="2" fill="white" />
+                                </svg>
+                            </div>
+                            <div className="bg-white/20 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4 backdrop-blur-md">
+                                <Bookmark className="text-white w-10 h-10" />
+                            </div>
+                            <h3 className="text-2xl font-bold text-white mb-2">No Saved Packages</h3>
+                        </div>
+
+                        <div className="p-8 text-center">
+                            <p className="text-gray-600 text-lg leading-relaxed mb-8">
+                                Saved a package in the Home screen and then see your package on this screen
+                            </p>
+
+                            <motion.button
+                                whileHover={{ scale: 1.05 }}
+                                whileTap={{ scale: 0.95 }}
+                                onClick={() => nav("/")}
+                                className="w-full bg-gradient-to-r cursor-pointer from-blue-600 to-indigo-600 text-white font-bold py-4 px-6 rounded-2xl shadow-lg hover:shadow-blue-200 transition-all flex items-center justify-center gap-3"
+                            >
+                                <FaBolt className="text-yellow-400" />
+                                <span>Go to Home Screen</span>
+                            </motion.button>
+                        </div>
+                    </motion.div>
                 </div>
             )}
         </div>

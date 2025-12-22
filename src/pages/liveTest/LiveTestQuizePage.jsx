@@ -75,7 +75,7 @@ const LiveTestQuizePage = () => {
               : "bg-gray-200 text-gray-700"
           }`}
         >
-          Not Attended
+          Unattempted
         </button>
         <button
           onClick={() => setViewMode("attended")}
@@ -85,7 +85,7 @@ const LiveTestQuizePage = () => {
               : "bg-gray-200 text-gray-700"
           }`}
         >
-          Attended
+          Attempted
         </button>
       </div>
 

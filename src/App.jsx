@@ -252,6 +252,7 @@ function App() {
 
         {/* GK & CA */}
         <Route path="/gk&ca-page" element={<SideBarLayout><GkCapage /></SideBarLayout>} />
+        
         <Route path="/gk-ca-test-instruction" element={<SideBarLayout><GkCaTestInstructions /></SideBarLayout>} />
         <Route path="/gk-test-attend" element={<ProtectedRoute><GkCAtestPage /></ProtectedRoute>} />
 

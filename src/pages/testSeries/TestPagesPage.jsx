@@ -5,7 +5,7 @@ import { IoMdCheckmarkCircle } from "react-icons/io";
 import { AiOutlineReload } from "react-icons/ai";
 import { HiOutlineLightningBolt } from "react-icons/hi";
 import { useDispatch } from "react-redux";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import {
     fetchUserTestSeriesRankSlice,
     getSingleCategoryPackageTestseriesDetailSlice,
@@ -88,179 +88,62 @@ const TestPagesPage = () => {
         return () => window.removeEventListener('focus', handleFocus);
     }, []);
 
-    // ✅ View Result handler
-    // const handleViewResult = async (test) => {
-    //     try {
-    //         // test.id and test.attend_id must come from your test list API
-    //         if (!test.id || !test.attend_id) {
-    //             console.error("Missing test_id or attend_id on View Result", test);
-    //             return;
-    //         }
-
-    //         // Call rank/details API ONCE here
-    //         const res = await dispatch(
-    //             fetchUserTestSeriesRankSlice({
-    //                 test_id: test.id,
-    //                 attend_id: test.attend_id,
-    //             })
-    //         ).unwrap();
-
-    //         if (res.status_code === 200 && res.data) {
-    //             // nav("/analysis", {
-    //             //     state: {
-    //             //         // tell Screen6 this is preloaded
-    //             //         isDataPreloaded: true,
-    //             //         preloadedData: res.data,
-
-    //             //         actualTestId: test.id,
-    //             //         testInfo: {
-    //             //             test_id: test.id,
-    //             //             attend_id: res.data.my_detail?.attend_id,
-    //             //             title: test.title,
-    //             //             time: test.time,
-    //             //             total_marks: test.total_marks,
-    //             //             negative_mark: test.negative_mark,
-    //             //         },
-    //             //     },
-    //             // });
-    //             nav('/analysis', {
-    //                 state: {
-    //                     isDataPreloaded: true,
-    //                     preloadedData: res.data,
-
-    //                     // identifiers
-    //                     actualTestId: testRow.test_id,
-    //                     attend_id: testRow.id,
-    //                     testInfo: {
-    //                         test_id: testRow.test_id,
-    //                         id: testRow.id,
-    //                         attend_id: testRow.id,
-    //                         title: testRow.title,
-    //                         time: testRow.time,
-    //                         total_marks: testRow.total_marks,
-    //                         negative_mark: testRow.negative_mark,
-    //                     },
-
-    //                     // 🔽 NEW: attempts data for dropdown
-    //                     allAttempts: allAttemptsForThisTest,
-    //                     currentAttemptId: testRow.id,
-    //                 },
-    //             });
-    //         }
-    //     } catch (error) {
-    //         console.error("❌ View Result error:", error);
-    //     }
-    // };
 
     // Correct handler
-const handleViewResult = async (test) => {
-  try {
-    // ✅ use id as test_id and attend_id as attempt id
-    const testId = test.id;
-    const attendId = test.attend_id;
+    const handleViewResult = async (test) => {
+        try {
+            // ✅ use id as test_id and attend_id as attempt id
+            const testId = test.id;
+            const attendId = test.attend_id;
 
-    if (!testId || !attendId) {
-      console.error('Missing test_id or attend_id on View Result', test);
-      return;
-    }
+            if (!testId || !attendId) {
+                console.error('Missing test_id or attend_id on View Result', test);
+                return;
+            }
 
-    const res = await dispatch(
-      fetchUserTestSeriesRankSlice({
-        test_id: testId,
-        attend_id: attendId,
-      })
-    ).unwrap();
+            const res = await dispatch(
+                fetchUserTestSeriesRankSlice({
+                    test_id: testId,
+                    attend_id: attendId,
+                })
+            ).unwrap();
 
-    if (res.status_code === 200 && res.data) {
-      const allAttemptsForThisTest = testData.filter(
-        t => t.id === testId && t.attend_id
-      );
+            if (res.status_code === 200 && res.data) {
+                const allAttemptsForThisTest = testData.filter(
+                    t => t.id === testId && t.attend_id
+                );
 
-      nav('/analysis', {
-        state: {
-          isDataPreloaded: true,
-          preloadedData: res.data,
+                nav('/analysis', {
+                    state: {
+                        isDataPreloaded: true,
+                        preloadedData: res.data,
 
-          actualTestId: testId,
-          attend_id: attendId,
-          testInfo: {
-            test_id: testId,
-            id: attendId,
-            attend_id: attendId,
-            title: test.title,
-            time: test.time,
-            total_marks: test.marks,
-            negative_mark: test.negative_mark,
-          },
+                        actualTestId: testId,
+                        attend_id: attendId,
+                        testInfo: {
+                            test_id: testId,
+                            id: attendId,
+                            attend_id: attendId,
+                            title: test.title,
+                            time: test.time,
+                            total_marks: res.data.test_detail?.total_marks || test.marks,
+                            negative_mark: test.negative_mark,
+                            total_questions: res.data.test_detail?.total_no_of_question || test.total_questions,
+                        },
 
-          allAttempts: allAttemptsForThisTest,
-          currentAttemptId: attendId,
-        },
-      });
-    }
-  } catch (error) {
-    console.error('View Result error:', error);
-  }
-};
-
-
-
-
-    // console.log("Pause Status Array", pauseStatusArray);
+                        allAttempts: allAttemptsForThisTest,
+                        currentAttemptId: attendId,
+                    },
+                });
+            }
+        } catch (error) {
+            console.error('View Result error:', error);
+        }
+    };
 
 
-    // const getSigleCategoryData = async (page = 1, query = '') => {
 
-    //     if (state) {
-    //         try {
-    //             setPageLoading(true);
-    //             const res = await dispatch(
-    //                 getSingleCategoryPackageTestseriesSlice({
-    //                     testId: state.testId,
-    //                     page,
-    //                     search: query
-    //                 })
-    //             ).unwrap();
 
-    //             console.log('Single Category Test Series Data', res.data?.package_detail);
-    //             setExamCategoryTitle(res?.data?.package_detail?.exam_category?.title ||
-    //                 res?.data?.package_detail?.category_name ||
-    //                 'General');
-
-    //             if (res.status_code === 200) {
-    //                 const rawTestData = res.data?.test_series?.data || [];
-
-    //                 const sortedTestData = rawTestData.sort((a, b) => {
-    //                     const seqA = a.sequence ? Number(a.sequence) : Infinity;
-    //                     const seqB = b.sequence ? Number(b.sequence) : Infinity;
-    //                     return seqA - seqB;
-    //                 });
-
-    //                 setTestData(prev => page === 1 ? sortedTestData : [...prev, ...sortedTestData]);
-    //                 console.log('Sorted test data for page', page, sortedTestData);
-
-    //                 // ✅✅✅ FIX: Correct property names
-    //                 setPagination({
-    //                     current_page: res.data?.test_series?.current_page || 1,
-    //                     last_page: res.data?.test_series?.last_page || 1,
-    //                 });
-
-    //                 setTestId(res.data?.package_detail?.id);
-    //             }
-    //         } catch (error) {
-    //             console.error('❌ API Error:', error);
-    //             setShowAlert(true);
-
-    //             if (error.status === 401 || error.response?.status === 401) {
-    //                 setMessage('Login token has expired. Please sign in again to continue.');
-    //             } else {
-    //                 setMessage('Failed to load tests. Please try again.');
-    //             }
-    //         } finally {
-    //             setPageLoading(false);
-    //         }
-    //     }
-    // };
 
     const getSigleCategoryData = async (page = 1, query = "") => {
         const navTestId = state?.testId;   // value coming from navigation
@@ -367,254 +250,6 @@ const handleViewResult = async (test) => {
         }
     };
 
-    // const handleResume = async () => {
-    //     try {
-    //         const res = await dispatch(getSingleCategoryPackageTestseriesDetailSlice(resumeData?.id)).unwrap();
-    //         nav('/scc-mock-test', {
-    //             state: {
-    //                 testInfo: res.data.test_series_info,
-    //                 testId: state?.testId,
-    //                 testDetail: res.data.details,
-    //                 packageDetail: res.data.package_detail,
-    //             }
-    //         });
-    //         setShowModal(false);
-    //     } catch (error) {
-    //         console.log("ERROR ===>", error);
-    //     }
-    // };
-
-    // const handleResume = async () => {
-    //     try {
-    //         // ✅ Clear pause status
-    //         const updatedPauseArray = pauseStatusArray.filter(item => item.test_id !== resumeData?.id);
-    //         await secureSaveTestData('pause_status', 'pause_status_array', updatedPauseArray);
-    //         setPauseStatusArray(updatedPauseArray);
-
-    //         console.log('✅ Resume Test:', resumeData.id);
-
-    //         const res = await dispatch(getSingleCategoryPackageTestseriesDetailSlice(resumeData?.id)).unwrap();
-
-    //         if (examCategoryTitle === 'SSC') {
-    //             nav('/scc-mock-test', {
-    //                 state: {
-    //                     testInfo: res.data.test_series_info,
-    //                     testId: state?.testId,
-    //                     testDetail: res.data.details,
-    //                     packageDetail: res.data.package_detail,
-    //                     isResuming: true,
-    //                 }
-    //             });
-    //         } else {
-    //             nav('/online-exam', {
-    //                 state: {
-    //                     testInfo: res.data.test_series_info,
-    //                     testId: state?.testId,
-    //                     testDetail: res.data.details,
-    //                     packageDetail: res.data.package_detail,
-    //                     isResuming: true,
-    //                 }
-    //             });
-    //         }
-
-    //         setShowModal(false);
-    //     } catch (error) {
-    //         console.error("❌ Resume Error:", error);
-    //         setShowAlert(true);
-    //         setMessage('Failed to resume test. Please try again.');
-    //     }
-    // };
-    // const handleResume = async () => {
-    //     try {
-    //         console.log('▶️ Resuming test:', resumeData.id);
-
-    //         // ✅ DON'T clear pause status yet - do it in Screen5 after restoration
-    //         // Just navigate with isPaused flag
-
-    //         const res = await dispatch(getSingleCategoryPackageTestseriesDetailSlice(resumeData?.id)).unwrap();
-
-    //         if (examCategoryTitle === 'SSC') {
-    //             nav('/scc-mock-test', {  // ✅ Changed to /screen5
-    //                 state: {
-    //                     testInfo: res.data.test_series_info,
-    //                     testId: state?.testId,
-    //                     testDetail: res.data.details,
-    //                     packageDetail: res.data.package_detail,
-    //                     isResuming: true,  // ✅ Add flag
-    //                 }
-    //             });
-
-    //             const stateData = {
-    //                 testInfo: res.data.test_series_info,
-    //                 testId: state?.testId,
-    //                 testDetail: res.data.details,
-    //                 packageDetail: res.data.package_detail,
-    //                 isResuming: true,  // ✅ Add flag
-    //             }
-    //             localStorage.setItem("stateVal", JSON.stringify(stateData))
-
-
-    //         } else {
-    //             nav('/online-exam', {  // ✅ Changed to /screen5
-    //                 state: {
-    //                     testInfo: res.data.test_series_info,
-    //                     testId: state?.testId,
-    //                     testDetail: res.data.details,
-    //                     packageDetail: res.data.package_detail,
-    //                     isResuming: true,  // ✅ Add flag
-    //                 }
-    //             });
-    //         }
-
-    //         setShowModal(false);
-    //     } catch (error) {
-    //         console.error("❌ Resume Error:", error);
-    //         setShowAlert(true);
-    //         setMessage('Failed to resume test. Please try again.');
-    //     }
-    // };
-
-    // const handleResume = async () => {
-    //     try {
-    //         console.log("▶️ Resuming test:", resumeData.id);
-
-    //         // 1. Get fresh test details
-    //         const res = await dispatch(
-    //             getSingleCategoryPackageTestseriesDetailSlice(resumeData?.id)
-    //         ).unwrap;
-
-    //         const navState = {
-    //             testInfo: res.data.test_series_info,
-    //             testId: state?.testId,              // package id
-    //             testDetail: res.data.details,
-    //             packageDetail: res.data.package_detail,
-    //             isResuming: true,
-    //             currentTestCardId: resumeData.id,   // ✅ card id used for pauseStatus
-    //         };
-
-    //         // persist for refresh
-    //         localStorage.setItem("stateVal", JSON.stringify(navState));
-
-    //         if (examCategoryTitle === "SSC") {
-    //             nav("/scc-mock-test", { state: navState });
-    //         } else {
-    //             nav("/online-exam", { state: navState });
-    //         }
-
-    //         setShowModal(false);
-    //     } catch (error) {
-    //         console.error("❌ Resume Error:", error);
-    //         setShowAlert(true);
-    //         setMessage("Failed to resume test. Please try again.");
-    //     }
-    // };
-
-    // const handleResume = async () => {
-    //   try {
-    //     console.log("Resuming test, resumeData.id", resumeData?.id);
-
-    //     const res = await dispatch(
-    //       getSingleCategoryPackageTestseriesDetailSlice(resumeData?.id)
-    //     ).unwrap;
-
-    //     const navState = {
-    //       testInfo: res.data.testseriesinfo,
-    //       testId: state?.testId,
-    //       testDetail: res.data.details,
-    //       packageDetail: res.data.packagedetail,
-    //       isResuming: true,
-    //       currentTestCardId: resumeData.id,
-    //     };
-
-    //     localStorage.setItem("stateVal", JSON.stringify(navState));
-
-    //     if (examCategoryTitle === "SSC") {
-    //       nav("/scc-mock-test", { state: navState });
-    //     } else {
-    //       nav("/online-exam", { state: navState });
-    //     }
-
-    //     setShowModal(false);
-    //   } catch (error) {
-    //     console.error("Resume Error", error);
-    //     setShowAlert(true);
-    //     setMessage("Failed to resume test. Please try again.");
-    //   }
-    // };
-    // const handleResume = async () => {
-    //     if (!resumeData?.id) {
-    //         console.error("No resumeData.id, cannot resume");
-    //         setShowAlert(true);
-    //         setMessage("Cannot resume this test. Please refresh and try again.");
-    //         return;
-    //     }
-
-    //     try {
-    //         console.log("Resuming test, resumeData.id =", resumeData.id);
-
-    //         const res = await dispatch(
-    //             getSingleCategoryPackageTestseriesDetailSlice(resumeData.id)
-    //         ).unwrap();
-
-    //         const navState = {
-    //             testInfo: res.data.testseriesinfo,
-    //             testId: state?.testId,              // package id coming from route
-    //             testDetail: res.data.details,
-    //             packageDetail: res.data.packagedetail,
-    //             isResuming: true,
-    //             currentTestCardId: resumeData.id,   // same id used for card & pause
-    //         };
-
-    //         localStorage.setItem("stateVal", JSON.stringify(navState));
-
-    //         if (examCategoryTitle === "SSC") {
-    //             nav("/scc-mock-test", { state: navState });
-    //         } else {
-    //             nav("/online-exam", { state: navState });
-    //         }
-
-    //         setShowModal(false);
-    //     } catch (error) {
-    //         console.error("Resume Error:", error);
-    //         setShowAlert(true);
-    //         setMessage("Failed to resume test. Please try again.");
-    //     }
-    // };
-
-    //     const handleResume = async () => {
-    //   if (!resumeData?.id) return;
-
-    //   try {
-    //     console.log("Resuming test, resumeData.id =", resumeData.id);
-
-    //     const res = await dispatch(
-    //       getSingleCategoryPackageTestseriesDetailSlice(resumeData.id)
-    //     ).unwrap();
-
-    //     const navState = {
-    //       testInfo: res.data.testseriesinfo,    // ✅ needed in Screen5
-    //       testId: state?.testId,               // package id
-    //       testDetail: res.data.details,
-    //       packageDetail: res.data.packagedetail,
-    //       isResuming: true,
-    //       currentTestCardId: resumeData.id,
-    //     };
-
-    //     localStorage.setItem("stateVal", JSON.stringify(navState));
-
-    //     if (examCategoryTitle === "SSC") {
-    //       nav("/scc-mock-test", { state: navState });
-    //     } else {
-    //       nav("/online-exam", { state: navState });
-    //     }
-
-    //     setShowModal(false);
-    //   } catch (error) {
-    //     console.error("Resume Error:", error);
-    //     setShowAlert(true);
-    //     setMessage("Failed to resume test. Please try again.");
-    //   }
-    // };
 
     const handleResume = async () => {
         try {
@@ -626,12 +261,14 @@ const handleViewResult = async (test) => {
 
             // Use the correct field names from API
             const navState = {
-                testInfo: res.data.test_series_info,    // ✅ was testseriesinfo
-                testId: state?.testId,                 // package id
+                testInfo: res.data.test_series_info,
+                testId: state?.testId,
                 testDetail: res.data.details,
-                packageDetail: res.data.package_detail, // ✅ was packagedetail
+                packageDetail: res.data.package_detail,
                 isResuming: true,
                 currentTestCardId: resumeData.id,
+                total_marks: res.data.total_marks,
+                total_questions: res.data.total_questions,
             };
 
             localStorage.setItem("stateVal", JSON.stringify(navState));
@@ -657,132 +294,7 @@ const handleViewResult = async (test) => {
         setShowReattemptConfirm(true);
     };
 
-    // ✅ WITHOUT Reset - Backend must handle multiple attempts
-    // const handleReattemptConfirm = async () => {
-    //     setShowReattemptConfirm(false);
 
-    //     if (!reattemptTest) return;
-
-    //     try {
-    //         setPageLoading(true);
-
-    //         // ✅ Pass isReattempt flag so backend creates new attempt
-    //         const testDetailsRes = await dispatch(
-    //             getSingleCategoryPackageTestseriesDetailSlice(reattemptTest.id)
-    //         ).unwrap();
-    //         const PackageDataRes = await dispatch(
-    //             getSingleCategoryPackageTestseriesSlice({
-    //                 testId: state.testId,
-    //             })
-    //         ).unwrap();
-    //         const userData = await getUserDataDecrypted("user");
-
-    //         // ✅ Navigate with reattempt flag
-    //         if (examCategoryTitle === 'SSC') {
-    //             nav('/system-info', {
-    //                 state: {
-    //                     testInfo: testDetailsRes.data.test_series_info,
-    //                     testId: state?.testId,
-    //                     testDetail: testDetailsRes.data.details,
-    //                     userInfo: userData,
-    //                     isReattempt: true,  // ✅ Important flag
-    //                     createNewAttempt: true, // ✅ Tell backend to create new attempt
-    //                     packageDetail: testDetailsRes?.data?.package_detail,
-    //                 }
-    //             });
-    //         } else {
-    //             nav('/online-exam-general-instruction', {
-    //                 state: {
-    //                     testInfo: testDetailsRes.data.test_series_info,
-    //                     testId: state?.testId,
-    //                     testDetail: testDetailsRes.data.details,
-    //                     userInfo: userData,
-    //                     isReattempt: true,  // ✅ Important flag
-    //                     createNewAttempt: true,
-    //                     packageDetail: testDetailsRes?.data?.package_detail,  // ✅ Tell backend to create new attempt
-    //                 }
-    //             });
-    //         }
-    //     } catch (error) {
-    //         console.error('Reattempt Error:', error);
-    //         setShowAlert(true);
-    //         setMessage('Failed to start reattempt. Please try again.');
-    //     } finally {
-    //         setPageLoading(false);
-    //         setReattemptTest(null);
-    //     }
-    // };
-
-    // const handleReattemptConfirm = async () => {
-    //     setShowReattemptConfirm(false);
-    //     if (!reattemptTest) return;
-
-    //     try {
-    //         setPageLoading(true);
-
-    //         const currentTestId = reattemptTest.id; // backend test id
-
-    //         // 1) Clear all encrypted/saved data for this test attempt
-    //         try {
-    //                await clearTestEncryptedData(currentTestId);
-    //         } catch (e) {
-    //             console.error("Error clearing encrypted test data", e);
-    //         }
-
-    //         // 2) Remove pause status entry for this test
-    //         try {
-    //             const existingPauseArray =
-    //                 (await secureGetTestData("pausestatus", "pausestatusarray")) || [];
-
-    //             const updatedPauseArray = existingPauseArray.filter(
-    //                 (item) => item.testid !== currentTestId
-    //             );
-
-    //             await secureSaveTestData(
-    //                 "pausestatus",
-    //                 "pausestatusarray",
-    //                 updatedPauseArray
-    //             );
-    //         } catch (e) {
-    //             console.error("Error clearing pause status for reattempt", e);
-    //         }
-
-    //         // 3) Fetch fresh test details (your existing code)
-    //         const testDetailsRes = await dispatch(
-    //             getSingleCategoryPackageTestseriesDetailSlice(reattemptTest.id)
-    //         ).unwrap();
-
-    //         const PackageDataRes = await dispatch(
-    //             getSingleCategoryPackageTestseriesSlice({ testId: state.testId })
-    //         ).unwrap();
-
-    //         const userData = await getUserDataDecrypted("user");
-
-    //         // 4) Navigate as reattempt with createNewAttempt flag
-    //         const navState = {
-    //             testInfo: testDetailsRes.data.test_series_info,
-    //             testId: state?.testId,
-    //             testDetail: testDetailsRes.data.details,
-    //             userInfo: userData,
-    //             isReattempt: true,
-    //             createNewAttempt: true, // backend creates new attempt
-    //             packageDetail: testDetailsRes?.data?.packagedetail,
-    //         };
-
-    //         if (examCategoryTitle === "SSC") {
-    //             nav("/system-info", { state: navState });
-    //         } else {
-    //             nav("/online-exam-general-instruction", { state: navState });
-    //         }
-    //     } catch (error) {
-    //         console.error("Reattempt Error", error);
-    //         setShowAlert(true);
-    //         setMessage("Failed to start reattempt. Please try again.");
-    //     } finally {
-    //         setPageLoading(false);
-    //         setReattemptTest(null);
-    //     }
-    // };
 
     const handleReattemptConfirm = async () => {
         setShowReattemptConfirm(false);
@@ -967,11 +479,13 @@ const handleViewResult = async (test) => {
                         <motion.button
                             whileHover={{ scale: 1.05, x: -2 }}
                             whileTap={{ scale: 0.95 }}
-                            onClick={() => nav(-1)}
+
                             className="flex items-center gap-2 px-4 py-2 bg-white hover:bg-gray-50 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 border border-gray-200 w-fit group"
                         >
                             <MdArrowBackIos size={16} className="group-hover:-translate-x-1 transition-transform duration-300" />
-                            <span className="font-medium text-gray-700">Back</span>
+                            <span className="font-medium text-gray-700">
+                                <Link to="/">Back</Link>
+                            </span>
                         </motion.button>
                         <div className="flex-1 min-w-0">
                             <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 truncate">Test Series</h1>

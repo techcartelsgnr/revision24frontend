@@ -8,7 +8,7 @@ const GkCaTestInstructions = () => {
   const nav = useNavigate();
   const { state } = useLocation();
   const [isChecked, setIsChecked] = useState(false);
-  // console.log(state);
+  console.log(state);
   const [userInfo, setUserInfo] = useState(null);
   const [lang, setLang] = useState("Choose a language");
   const getUserInfo = async () => {

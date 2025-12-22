@@ -88,11 +88,11 @@ const RRBInstructionPage = () => {
                         </div>
                         <div className="bg-white p-3 rounded border">
                             <div className="font-semibold text-gray-600">Total Questions</div>
-                            <div className="text-lg font-bold text-green-600">{totalQuestions}</div>
+                            <div className="text-lg font-bold text-green-600">{totalQuestions || testInfo.no_of_question}</div>
                         </div>
                         <div className="bg-white p-3 rounded border">
                             <div className="font-semibold text-gray-600">Total Marks</div>
-                            <div className="text-lg font-bold text-green-600">{totalMarks}</div>
+                            <div className="text-lg font-bold text-green-600">{totalMarks || testInfo.marks}</div>
                         </div>
                         <div className="bg-white p-3 rounded border">
                             <div className="font-semibold text-gray-600">Negative Marking</div>

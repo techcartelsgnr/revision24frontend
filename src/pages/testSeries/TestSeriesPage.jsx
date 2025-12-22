@@ -8,7 +8,7 @@ import { FreeMode } from 'swiper/modules'
 import TestPackageCollection from '../../components/savecollection/TestPackageCollection'
 
 const TestSeriesPage = () => {
-  const [selectedItems, setSelectedItems] = useState('')
+  const [selectedItems, setSelectedItems] = useState('Save Packages')
   const [bookmarkedIds, setBookmarkedIds] = useState([]);
 
   const SaveCollectionsItem = [
@@ -19,9 +19,9 @@ const TestSeriesPage = () => {
     // "Save Tests",
   ]
 
-  useEffect(() => {
-    setSelectedItems(SaveCollectionsItem[0])
-  }, [])
+  // useEffect(() => {
+  //   setSelectedItems(SaveCollectionsItem[0])
+  // }, [])
 
   return (
     <div>
@@ -29,7 +29,7 @@ const TestSeriesPage = () => {
 
       <div className="p-4 border-b">
         {/* ✅ Horizontal Scroll with Swiper */}
-        {/* <Swiperå
+        {/* <Swiper
           slidesPerView={1}
           spaceBetween={10}
           freeMode={true}
@@ -48,7 +48,7 @@ const TestSeriesPage = () => {
               </div>
             </SwiperSlide>
           ))}
-        </Swiperå> */}
+        </Swiper> */}
 
         {/* नीचे आप अपनी collection component call कर सकते हैं */}
       </div>

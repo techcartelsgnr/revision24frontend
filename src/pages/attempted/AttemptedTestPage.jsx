@@ -1,7 +1,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { getattemptedData } from '../../redux/attemptedDataSlice';
 import { fetchUserTestSeriesRankSlice, getSingleCategoryPackageTestseriesDetailSlice, getSingleCategoryPackageTestseriesSlice } from '../../redux/HomeSlice';
 import { clearAllEncryptedTestData } from '../../helpers/testStorage';
@@ -512,23 +512,35 @@ const AttemptedTestPage = () => {
           <div className="w-full lg:w-80">
             {/* Live Indicators */}
             <div className="bg-white rounded-lg border border-gray-200 p-4 sm:p-6 mb-4 sm:mb-6">
-              <div className="flex items-center text-red-500 mb-3">
+              {/* <div className="flex items-center text-red-500 mb-3">
                 <span className="w-2 h-2 bg-red-500 rounded-full mr-2 animate-pulse"></span>
-                <span className="text-xs sm:text-sm font-medium">LIVE</span>
-              </div>
+                <span className="text-xs sm:text-sm font-medium">
+                  <Link to="/live-quiz-test">LIVE</Link>
+                </span>
+              </div> */}
 
               <div className="text-xs space-y-2">
+
+
+                <div className="flex items-center text-red-500">
+                   <span className="w-2 h-2 bg-red-500 rounded-full mr-2 animate-pulse"></span>
+                  <span>
+                    <Link to="/live-quiz-test" >LIVE</Link></span>
+                </div>
                 <div className="flex items-center text-blue-500">
                   <span className="mr-2">📊</span>
-                  <span>QUIZZES</span>
+                  <span>
+                    <Link to="/free-quizes" >QUIZZES</Link></span>
                 </div>
                 <div className="flex items-center text-red-500">
                   <span className="mr-2">📝</span>
-                  <span>TESTS</span>
+                  <span>
+                    <Link to="/gk&ca-page"> GK & CURRENT AFFAIRS</Link></span>
                 </div>
                 <div className="flex items-center text-blue-400">
                   <span className="mr-2">📚</span>
-                  <span>CLASSES</span>
+                  <span>
+                    <Link to="/live-classes">CLASSES</Link></span>
                 </div>
               </div>
             </div>
@@ -550,12 +562,12 @@ const AttemptedTestPage = () => {
                     <span className="text-gray-600">Chapter Tests:</span>
                     <span className="font-medium">{test.filter(t => t.test_title.includes('Chapter Test')).length}</span>
                   </div>
-                  <div className="flex justify-between">
+                  {/* <div className="flex justify-between">
                     <span className="text-gray-600">Avg Score:</span>
                     <span className="font-medium">
                       {test.length > 0 ? Math.round(test.reduce((acc, t) => acc + t.marks, 0) / test.length) : 0}
                     </span>
-                  </div>
+                  </div> */}
                 </div>
               </div>
             )}

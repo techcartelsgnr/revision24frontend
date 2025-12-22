@@ -17,7 +17,7 @@ const RRBInstructionPage2 = () => {
   const totalMarks = testDetail.reduce((total, subject) => total + parseInt(subject.marks || 0), 0);
 
   // Convert negative marking fraction to decimal
-  const negativeMarkDecimal = testInfo.negative_mark === "1/3" ? "0.33" : "0.25";
+  const negativeMarkDecimal = testInfo.negative_mark ;
 
   return (
     <div className="bg-white min-h-screen font-sans text-gray-700">
@@ -43,18 +43,18 @@ const RRBInstructionPage2 = () => {
               <p className="font-semibold">Duration: {testInfo.time || 90} Mins</p>
             </div>
             <div className="text-right">
-              <p className="font-semibold">Maximum Marks: {totalMarks || 120}</p>
+              <p className="font-semibold">Maximum Marks: {totalMarks || testInfo.marks}</p>
             </div>
           </div>
 
           <div className="mb-8">
             <h2 className="font-bold mb-3 text-gray-800">Read the following instructions carefully.</h2>
             <ol className="list-decimal list-inside space-y-2 text-sm text-gray-600">
-              <li>The test contains {totalQuestions || 120} total questions.</li>
+              <li>The test contains {totalQuestions || testInfo.no_of_question} total questions.</li>
               <li>Each question has 4 options out of which only one is correct.</li>
               <li>You have to finish the test in {testInfo.time || 90} minutes.</li>
               <li>Try not to guess the answer as there is negative marking.</li>
-              <li>You will be awarded 1 mark for each correct answer and {negativeMarkDecimal} will be deducted for each wrong answer.</li>
+              <li>You will be awarded {state.total_marks/totalQuestions} mark for each correct answer and {negativeMarkDecimal || testInfo.negative_mark} will be deducted for each wrong answer.</li>
               <li>There is no negative marking for the questions that you have not attempted.</li>
               <li>You can write this test only once. Make sure that you complete the test before you submit the test and/or close the browser.</li>
             </ol>
@@ -133,7 +133,7 @@ const RRBInstructionPage2 = () => {
               {/* Questions */}
               <div className="flex items-center justify-between">
                 <span className="text-gray-600 font-medium text-sm whitespace-nowrap">Questions:</span>
-                <span className="font-bold text-gray-900 text-base ml-2">{totalQuestions}</span>
+                <span className="font-bold text-gray-900 text-base ml-2">{totalQuestions || testInfo.no_of_question}</span>
               </div>
 
               {/* Duration */}
@@ -145,7 +145,7 @@ const RRBInstructionPage2 = () => {
               {/* Total Marks */}
               <div className="flex items-center justify-between">
                 <span className="text-gray-600 font-medium text-sm whitespace-nowrap">Total Marks:</span>
-                <span className="font-bold text-gray-900 text-base ml-2">{totalMarks}</span>
+                <span className="font-bold text-gray-900 text-base ml-2">{totalMarks || testInfo.marks}</span>
               </div>
 
               {/* Negative Marking */}

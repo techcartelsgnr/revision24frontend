@@ -548,8 +548,8 @@
 
 import React, { useEffect, useState, useRef } from "react";
 import { useDispatch } from "react-redux";
-import { getAllGkSlice } from "../../../redux/HomeSlice";
-import { useNavigate } from "react-router-dom";
+import { getAllGkSlice, getSingleCategoryPackageTestseriesDetailSlice } from "../../../redux/HomeSlice";
+import { useLocation, useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   FaBookOpen,
@@ -563,12 +563,14 @@ import {
   FaCalendarAlt
 } from "react-icons/fa";
 import { HiSparkles, HiLightningBolt } from "react-icons/hi";
+import { getUserDataDecrypted } from "../../../helpers/userStorage";
 
 const GkCapage = () => {
   const dispatch = useDispatch();
   const [freeQuizData, setFreeQuizData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
+  const { state } = useLocation();
   const [pagination, setPagination] = useState({
     current_page: 1,
     last_page: 1,
@@ -581,6 +583,30 @@ const GkCapage = () => {
   const [hoveredCard, setHoveredCard] = useState(null);
   const [updateTrigger, setUpdateTrigger] = useState(0);
   const testSectionRef = useRef(null);
+
+
+   const fetchTestSeriesDetails = async (item) => {
+          try {
+              const res = await dispatch(getSingleCategoryPackageTestseriesDetailSlice(item.id)).unwrap();
+              const userData = await getUserDataDecrypted("user");
+             
+                  nav('/online-exam-general-instruction', {
+                      state: {
+                          testInfo: res.data.test_series_info,
+                          testId: state?.testId,
+                          testDetail: res.data.details,
+                          userInfo: userData,
+                          packageDetail: res.data?.package_detail,
+                          total_marks: res.data.total_marks,
+                          total_questions: res.data.total_questions,
+                      }
+                  });
+          } catch (error) {
+              console.log("ERROR ", error);
+          }
+      };
+
+  
 
   // ✅ Format date nicely
   const formatTestDate = (dateString) => {
@@ -933,7 +959,8 @@ const GkCapage = () => {
                             <motion.button
                               whileHover={{ scale: 1.03, y: -2 }}
                               whileTap={{ scale: 0.97 }}
-                              onClick={() => nav("/gk-ca-test-instruction", { state: { testInfo: test } })}
+                              onClick={() => fetchTestSeriesDetails(test)}
+                              // onClick={() => nav("/online-exam-general-instruction", { state: { testInfo: test } })}
                               className="w-full py-3 px-4 bg-gradient-to-r from-blue-600 via-blue-700 to-indigo-700 hover:from-blue-700 hover:via-blue-800 hover:to-indigo-800 text-white font-bold text-sm rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center gap-2 group relative overflow-hidden"
                             >
                               <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 transform -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
